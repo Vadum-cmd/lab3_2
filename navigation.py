@@ -1,23 +1,25 @@
 """
 This module helps user to navigate through json object obtained via Twitter API.
 GitHub Repository: https://github.com/Vadum-cmd/lab3_2.git
+https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-friends-ids
 """
 from pprint import pprint
 import requests
+import json
 
 
 def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> dict:
     """
     Return .json object using Twitter API using bearer token.
-    >>> get_json('d', '', '', '')
+    >>> get_json('d', '1.1/friends/list.json', '@ITreskot', '2')
     {'errors': [{'code': 89, 'message': 'Invalid or expired token.'}]}
     """
     base_url = 'https://api.twitter.com/'
 
     if endpoint == "":
-        endpoint = '1.1/friends/list.json'
+        endpoint = '1.1/friends/ids.json'
     if screen_name == '':
-        screen_name = '@DonaldTrump'
+        screen_name = '@JoeBiden'
     if count == "":
         count = '2'
 
@@ -36,8 +38,8 @@ def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> 
 
 def show_keys(objectt: dict) -> list:
     """
-    Returns list of keys on objectt.
-    >>> show_keys(get_json('d', '1.1/friends/list.json', '@DonaldTrump', '2'))
+    Returns list of keys on object.
+    >>> show_keys(get_json('d', '1.1/friends/ids.json', '@ITreskot', '2'))
     ['errors']
     """
     return list(objectt.keys())
@@ -47,13 +49,22 @@ def main():
     """
     Main function of a program.
     """
-    bearer_token = input('Enter your bearer token: ')
-    endpoint = input('Enter endpoint (press Enter for default value "1.1/friends/list.json"): ')
-    screen_name = input('Enter screenname (press Enter for default value "@DonaldTrump"): ')
+    bearer_token = input('Enter your access token: ')
+    endpoint = input('Enter endpoint (press Enter for default value "1.1/friends/ids.json"): ')
+    screen_name = input('Enter screen name (press Enter for default value "@JoeBiden"): ')
     count = input('Enter count (press Enter for default value "2"): ')
 
     json_data = get_json(bearer_token, endpoint, screen_name, count)
+    #data from objectt
     objectt = json_data
+    if 'errors' in objectt.keys():
+        # file for testing
+        with open('twitter2.json') as json_file:
+            objectt = json.load(json_file)
+        #data from objectt
+        print(objectt)
+    else:
+        print(objectt)
 
     while True:
         if isinstance(objectt, dict):
@@ -102,5 +113,5 @@ def main():
 
 if __name__ == "__main__":
     # import doctest
-    # print(doctest.testmod())
+    # doctest.testmod()
     main()
