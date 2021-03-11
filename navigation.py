@@ -9,7 +9,7 @@ import requests
 def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> dict:
     """
     Return .json object using Twitter API using bearer token.
-    >>> get_json('d', '1.1/friends/list.json', '@kaka', '2')
+    >>> get_json('d', '', '', '')
     {'errors': [{'code': 89, 'message': 'Invalid or expired token.'}]}
     """
     base_url = 'https://api.twitter.com/'
@@ -17,7 +17,7 @@ def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> 
     if endpoint == "":
         endpoint = '1.1/friends/list.json'
     if screen_name == '':
-        screen_name = '@BarackObama'
+        screen_name = '@DonaldTrump'
     if count == "":
         count = '2'
 
@@ -36,8 +36,8 @@ def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> 
 
 def show_keys(objectt: dict) -> list:
     """
-    Returns list of keys on object.
-    >>> show_keys(get_json('d', '1.1/friends/list.json', '@kaka', '2'))
+    Returns list of keys on objectt.
+    >>> show_keys(get_json('d', '1.1/friends/list.json', '@DonaldTrump', '2'))
     ['errors']
     """
     return list(objectt.keys())
@@ -49,7 +49,7 @@ def main():
     """
     bearer_token = input('Enter your bearer token: ')
     endpoint = input('Enter endpoint (press Enter for default value "1.1/friends/list.json"): ')
-    screen_name = input('Enter screenname (press Enter for default value "@BarackObama"): ')
+    screen_name = input('Enter screenname (press Enter for default value "@DonaldTrump"): ')
     count = input('Enter count (press Enter for default value "2"): ')
 
     json_data = get_json(bearer_token, endpoint, screen_name, count)
@@ -102,5 +102,5 @@ def main():
 
 if __name__ == "__main__":
     # import doctest
-    # doctest.testmod()
+    # print(doctest.testmod())
     main()
