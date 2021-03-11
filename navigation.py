@@ -36,7 +36,7 @@ def get_json(bearer_token: str, endpoint: str, screen_name: str, count: str) -> 
 
 def show_keys(objectt: dict) -> list:
     """
-    Returns list of keys on objectt.
+    Returns list of keys on object.
     >>> show_keys(get_json('d', '1.1/friends/list.json', '@kaka', '2'))
     ['errors']
     """
